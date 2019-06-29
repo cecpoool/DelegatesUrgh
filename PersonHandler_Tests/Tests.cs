@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FileParserNetStandard;
 using NUnit.Framework;
+using ObjectLibrary;
 
 namespace PersonHandler_Tests {
     [TestFixture]
@@ -10,9 +11,9 @@ namespace PersonHandler_Tests {
         private FileHandler _fh;
         private DataParser _dp;
 
-        private string csvPath = "/users/anguyen/Documents/Rider/processed_data.csv"; // change to appropriate path
+        private string csvPath = "/Users/cjmco/Downloads/delegates/data.csv"; // change to appropriate path
         private List<List<string>> data;
-
+        private List<string> lines;
         private List<Person> people;
 
         [SetUp]
@@ -20,8 +21,8 @@ namespace PersonHandler_Tests {
             _fh = new FileHandler();
             _dp = new DataParser();
 
-            var lines = _fh.ReadFile(csvPath);
-            data = _fh.ParseCsv(lines);
+           lines = _fh.ReadFile(csvPath);
+           data = _fh.ParseCsv(lines);
         }
         
         [Test]

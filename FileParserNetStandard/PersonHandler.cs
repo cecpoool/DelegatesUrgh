@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Delegate_Exercise;
+using FileParserNetStandard;
+using ObjectLibrary;
 
 
 namespace FileParserNetStandard {
-    
-    public class Person { }  // temp class delete this when Person is referenced from dll
-    
+
+  
     public class PersonHandler {
         public List<Person> People;
 
-        /// <summary>
-        /// Converts List of list of strings into Person objects for People attribute.
-        /// </summary>
-        /// <param name="people"></param>
         public PersonHandler(List<List<string>> people) {
-        
+            var _fh = new FileHandler();
+            var _dp = new DataParser();
+            var _ch = new CsvHandler();
+            var data = _dp.NoHashtags(people);
+            var data1 = _dp.StripQuotes(data);
+            var dataFin = _dp.StripWhiteSpace(data1);
+            var temp = dataFin.Select(row => row);
+
+
+            temp.Select(p => new Person((int.Parse(p[0])), p[1], p[2], new DateTime(Convert.ToInt64(p[3]))));
+            //temp.Select(p => int.TryParse(p[0],out res) == true ? continue : continue;
+
+            //argh this isn't working but i felt like I was so close.
+            //I tried to make a ternary for the first line in linq and had trouble.ss
         }
 
         /// <summary>

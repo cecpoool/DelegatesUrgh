@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using FileParserNetStandard;
 
+
 namespace FileParserNetStandard_Tests {
     [TestFixture]
     public class Tests {
         private FileHandler _fh;
         private DataParser _dp;
-        private string _csvPath = "/Users/anguyen/Documents/Rider/data.csv";  // change to appropriate path
-        private string _tsvPath = "/Users/anguyen/Documents/Rider/data.tsv";  // change to appropriate path
+        private string _csvPath = "/Users/cjmco/Downloads/delegates/data.csv";  // change to appropriate path
+        private string _tsvPath = "/Users/cjmco/Downloads/delegates/data.tsv";  // change to appropriate path
 
-        private string _writeFile = "/Users/anguyen/Documents/Rider/dataWrite.txt";  // change to appropriate path
+        private string _writeFile = "/Users/cjmco/Downloads/delegates/dataWrite.txt";  // change to appropriate path
        
         private List<List<string>> _data;
 
@@ -40,7 +41,7 @@ namespace FileParserNetStandard_Tests {
             Assert.AreEqual(501, list.Count);
             Assert.AreEqual("\"#419\",\"#Augy\",\"#Dedrick\",\"#636399072000000000\"", list[419]);
             Assert.AreEqual("\"#231\",\"#Silvester\",\"#O'Crowley\",\"#636340320000000000\"", list[231]);
-            
+
             list = _fh.ReadFile(_tsvPath);
 
             Assert.AreEqual(1001, list.Count);
@@ -56,7 +57,7 @@ namespace FileParserNetStandard_Tests {
             Assert.AreEqual(501, data.Count);
             Assert.AreEqual("\"#Dedrick\"", data[419][2]);
             Assert.AreEqual("\"#Silvester\"", data[231][1]);
-            
+
             list = _fh.ReadFile(_tsvPath);
             data = _fh.ParseData(list, '\t');
 
