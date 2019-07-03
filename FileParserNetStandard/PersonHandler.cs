@@ -13,22 +13,23 @@ namespace FileParserNetStandard {
   
     public class PersonHandler {
         public List<Person> People;
+        Person newPerson;
 
-        public PersonHandler(List<List<string>> people) {
-            var _fh = new FileHandler();
-            var _dp = new DataParser();
-            var _ch = new CsvHandler();
-            var data = _dp.NoHashtags(people);
-            var data1 = _dp.StripQuotes(data);
-            var dataFin = _dp.StripWhiteSpace(data1);
-            var temp = dataFin.Select(row => row);
-
-
-            temp.Select(p => new Person((int.Parse(p[0])), p[1], p[2], new DateTime(Convert.ToInt64(p[3]))));
-            //temp.Select(p => int.TryParse(p[0],out res) == true ? continue : continue;
-
-            //argh this isn't working but i felt like I was so close.
-            //I tried to make a ternary for the first line in linq and had trouble.ss
+        public PersonHandler(List<List<string>> people)
+        {
+            People = new List<Person>();
+            for (int i = 1; i <= people.Count; i++)
+            {
+                people.Select(x =>
+               {
+                   x[i].Trim().Replace("#", "").Replace("\"", "");
+                   if(x[0] != null) {
+                   Person newPerson = new Person(int.Parse(x[0]), x[1], x[2], new DateTime(Convert.ToInt64(x[3])));
+                   }
+                   return newPerson;
+               });
+                   People.Add(newPerson);
+            }
         }
 
         /// <summary>
@@ -37,7 +38,18 @@ namespace FileParserNetStandard {
         /// <returns></returns>
         public List<Person> GetOldest() {
             
-            return new List<Person>(); //-- return result here
+            return new List<Person>();
+            var oldest = People.Select(p => new
+            {
+                p.Dob.Year,
+                p.Dob.Month,
+                FormattedDate = p.Dob.ToString("yyyy-MMM")
+            })
+            .Distinct()
+            .OrderByDescending(p => p.Year)
+            .ThenByDescending(p => p.Month)
+            .Select(p => p.FormattedDate)
+            .Take(5);
         }
 
         /// <summary>
@@ -45,13 +57,14 @@ namespace FileParserNetStandard {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string GetString(int id) {
-
-            return "result";  //-- return result here
+        public string GetString(int id)
+        {
+            return People.Find(p => p.Id == id).ToString();
+            
         }
 
         public List<Person> GetOrderBySurname() {
-            return new List<Person>();  //-- return result here
+            return new List<Person>(People.OrderBy(p => p.Surname));
         }
 
         /// <summary>

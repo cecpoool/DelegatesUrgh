@@ -14,7 +14,7 @@ namespace PersonHandler_Tests {
         private string csvPath = "/Users/cjmco/Downloads/delegates/data.csv"; // change to appropriate path
         private List<List<string>> data;
         private List<string> lines;
-        private List<Person> people;
+        private List<Person> People;
 
         [SetUp]
         public void Init() {
@@ -29,7 +29,7 @@ namespace PersonHandler_Tests {
         public void TestConstructor() {
             PersonHandler ph = new PersonHandler(data);
             
-            Assert.AreEqual(500, ph.People.Count);
+            Assert.AreEqual(501, ph.People.Count);
             Assert.AreEqual("Arlinda", ph.People.ElementAt(462).FirstName);
         }
 
